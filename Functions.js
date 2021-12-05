@@ -4,6 +4,7 @@ const { json } = require("express")
 
 var count = 1
 const articles = []
+const baseUrl = "https://www.thedailystar.net/"
 
 async function getNews(res, url) {
         axios.get(url).then((response) => {
@@ -13,8 +14,10 @@ async function getNews(res, url) {
             $('h3', html).each(function() {
                 const title = $(this).text().trim()
                 const exists = /\brape|raped|sexual assault|sexual harrassment|gang rape|gang raped\b/.test(title)
-                const link = $(this).children('a').attr('href')
+                var link = $(this).children('a').attr('href')
                 var articleExists = false
+
+                var url = baseUrl.concat(link)
 
                 articles.find((article) => {
                     if(article.title == title) {
@@ -25,7 +28,7 @@ async function getNews(res, url) {
                 if(exists && !articleExists) {
                     articles.push({
                         title,
-                        link
+                        url
                     })
                     for(var i=0; i<articles.length; i++) {
                         if(articles[i].test == title) {
@@ -36,7 +39,6 @@ async function getNews(res, url) {
             })
     
             if(count > 20) {
-                console.log("done")
                 res.json(articles)
             }
             else {  
