@@ -86,4 +86,4 @@ app.get("/news/:newspaperId", (req, res) => {
     })
 })
 
-app.listen(PORT)
+app.listen(PORT || process.env.PORT)
