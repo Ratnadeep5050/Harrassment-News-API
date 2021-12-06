@@ -1,4 +1,4 @@
-const PORT = 3000
+const port = process.env.PORT || 3000
 const express = require("express")
 const axios = require("axios")
 const cheerio = require("cheerio")
@@ -86,4 +86,4 @@ app.get("/news/:newspaperId", (req, res) => {
     })
 })
 
-app.listen(PORT || process.env.PORT, "0.0.0.0")
+app.listen(port, "0.0.0.0")
