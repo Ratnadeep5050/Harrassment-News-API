@@ -38,7 +38,7 @@ async function getNews(res, url) {
                 }
             })
     
-            if(count > 20) {
+            if(count > 10) {
                 res.json(articles)
             }
             else {  
