@@ -4,8 +4,16 @@ const axios = require("axios")
 const cheerio = require("cheerio")
 const cors = require("cors")
 const { getNews } = require("./Functions")
+const admin = require('firebase-admin');
+const serviceAccount = require('./sexual-harassment-news-api-firebase-adminsdk-xgjdl-0338a835dd.json');
 
 const app = express()
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
 
 app.use(cors());
 
@@ -51,6 +59,18 @@ app.get("/", (req, res) => {
 app.get("/news", async (req, res) => {
     getNews(res, url)
 })
+
+app.get("/firebase", async (req, res) => {
+    await db.collection("news").add({
+        "title": "Woman gang-raped in Bagerhat, accused made video",
+        "newspaper": "The Business Standard",
+        "url": "https://www.tbsnews.net/bangladesh/woman-gang-raped-bagerhat-accused-made-video-144058",
+        "body": "",
+        "date": ""
+    });
+
+    res.send();
+});
 
 app.get("/news/:newspaperId", (req, res) => {
     const newspaperId = req.params.newspaperId;
