@@ -1,2 +1,2 @@
 # Harrassment-News-API
-An api.
+An api to extract news about sexual harassment.
